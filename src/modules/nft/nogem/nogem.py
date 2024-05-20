@@ -126,7 +126,12 @@ class Nogem(EVMAccount):
         balance = await self.get_wallet_balance('xxx', self.contract_address)
         if balance == 0:
             self.logger.warning(f'Hyperlane FT balance is 0 | [{self.wallet_address}]')
-            return
+            await sleep(30)
+            if balance == 0:
+                await sleep(30)
+                if balance == 0:
+                    self.logger.warning(f'Hyperlane FT balance is 0 | [{self.wallet_address}]')
+                    return
 
         if self.bridge_all_tokens:
             amount = balance
